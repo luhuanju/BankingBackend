@@ -17,3 +17,8 @@ docs/
 build/
 reports/
 
+.DS_Store
+.classpath
+.project
+.settings
+
