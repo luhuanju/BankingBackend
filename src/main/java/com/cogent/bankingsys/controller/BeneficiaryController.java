@@ -46,7 +46,7 @@ public class BeneficiaryController {
             Beneficiary existingBeneficiary = optionalBeneficiary.get();
 
             // update the approval status of the beneficiary record
-            existingBeneficiary.setApproved("Yes");
+            existingBeneficiary.setApproved(beneficiary.getApproved());
             beneficiaryRepository.save(existingBeneficiary);
 
             // return the updated beneficiary record
