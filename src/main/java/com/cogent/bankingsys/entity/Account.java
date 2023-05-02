@@ -6,6 +6,7 @@ import com.cogent.bankingsys.entity.enumClass.AccountType;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Table(name = "account")
@@ -14,6 +15,9 @@ public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long accountId;
+
+    @Column(name = "accountNumber")
+    private Long accountNumber;
 
     @Column(name = "accountType")
     @Enumerated(EnumType.STRING)
@@ -25,36 +29,34 @@ public class Account {
     @Column(name = "approved")
     private String approved;
 
-    @Column(name = "accountNumber")
-    private Long accountNumber;
-
     @Column(name = "dateOfCreation")
     private Date dateOfCreation;
-
-    @Column(name = "customerId")
-    private String customerId;
 
     @Column(name = "accountStatus")
     @Enumerated(EnumType.STRING)
     private AccountStatus accountStatus;
 
-    @OneToMany(mappedBy="account")
-    private ArrayList<Transaction> transaction;
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
 
-    public Account(Long accountId, AccountType accountType, Long accountBalance, String approved, Long accountNumber, Date dateOfCreation, String customerId, AccountStatus accountStatus, ArrayList<Transaction> transaction) {
+    @OneToMany(fetch = FetchType.EAGER, mappedBy="account", cascade = CascadeType.ALL)
+    private ArrayList<Transaction> transaction = new ArrayList<>();
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "account", cascade = CascadeType.ALL)
+    private ArrayList<CusBeneficiary> cusBeneficiary = new ArrayList<>();
+
+    public Account(Long accountId, Long accountNumber, AccountType accountType, Long accountBalance, String approved, Date dateOfCreation, AccountStatus accountStatus, Customer customer, ArrayList<Transaction> transaction, ArrayList<CusBeneficiary> cusBeneficiary) {
         this.accountId = accountId;
+        this.accountNumber = accountNumber;
         this.accountType = accountType;
         this.accountBalance = accountBalance;
         this.approved = approved;
-        this.accountNumber = accountNumber;
         this.dateOfCreation = dateOfCreation;
-        this.customerId = customerId;
         this.accountStatus = accountStatus;
+        this.customer = customer;
         this.transaction = transaction;
-    }
-
-    public Account() {
-
+        this.cusBeneficiary = cusBeneficiary;
     }
 
     public Long getAccountId() {
@@ -63,6 +65,14 @@ public class Account {
 
     public void setAccountId(Long accountId) {
         this.accountId = accountId;
+    }
+
+    public Long getAccountNumber() {
+        return accountNumber;
+    }
+
+    public void setAccountNumber(Long accountNumber) {
+        this.accountNumber = accountNumber;
     }
 
     public AccountType getAccountType() {
@@ -89,28 +99,12 @@ public class Account {
         this.approved = approved;
     }
 
-    public Long getAccountNumber() {
-        return accountNumber;
-    }
-
-    public void setAccountNumber(Long accountNumber) {
-        this.accountNumber = accountNumber;
-    }
-
     public Date getDateOfCreation() {
         return dateOfCreation;
     }
 
     public void setDateOfCreation(Date dateOfCreation) {
         this.dateOfCreation = dateOfCreation;
-    }
-
-    public String getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(String customerId) {
-        this.customerId = customerId;
     }
 
     public AccountStatus getAccountStatus() {
@@ -121,6 +115,14 @@ public class Account {
         this.accountStatus = accountStatus;
     }
 
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
     public ArrayList<Transaction> getTransaction() {
         return transaction;
     }
@@ -129,18 +131,27 @@ public class Account {
         this.transaction = transaction;
     }
 
+    public ArrayList<CusBeneficiary> getCusBeneficiary() {
+        return cusBeneficiary;
+    }
+
+    public void setCusBeneficiary(ArrayList<CusBeneficiary> cusBeneficiary) {
+        this.cusBeneficiary = cusBeneficiary;
+    }
+
     @Override
     public String toString() {
         return "Account{" +
                 "accountId=" + accountId +
+                ", accountNumber=" + accountNumber +
                 ", accountType=" + accountType +
                 ", accountBalance=" + accountBalance +
                 ", approved='" + approved + '\'' +
-                ", accountNumber=" + accountNumber +
                 ", dateOfCreation=" + dateOfCreation +
-                ", customerId='" + customerId + '\'' +
                 ", accountStatus=" + accountStatus +
+                ", customer=" + customer +
                 ", transaction=" + transaction +
+                ", cusBeneficiary=" + cusBeneficiary +
                 '}';
     }
 }

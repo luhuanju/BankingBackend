@@ -4,6 +4,8 @@ import com.cogent.bankingsys.entity.enumClass.AccountType;
 import com.cogent.bankingsys.entity.enumClass.Active;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+
 @Entity
 @Table(name = "cusBeneficiary")
 public class CusBeneficiary {
@@ -11,9 +13,10 @@ public class CusBeneficiary {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long cusBeneficiaryId;
 
-    // #TODO: accountID/ accountNumber, accountType, approved from account Table?
-    @Column(name = "accountNumber")
-    private Long accountNumber;
+    // accountNumber is beneficiaryAccountNo
+    @ManyToOne
+    @JoinColumn(name = "account_id")
+    private Account account;
 
     @Column(name = "accountType")
     @Enumerated(EnumType.STRING)
@@ -22,9 +25,8 @@ public class CusBeneficiary {
     @Column(name = "approved")
     private String approved;
 
-    @Column(name = "beneficiaryAccountNo")
-    private Long beneficiaryAccountNo;
-
+    // accountNumber is beneficiaryAccountNo
+    //  @OneToMany(mappedBy = "cusBeneficiary")
     @Column(name = "beneficiaryName")
     private String beneficiaryName;
 
@@ -32,14 +34,19 @@ public class CusBeneficiary {
     @Enumerated(EnumType.STRING)
     private Active active;
 
-    public CusBeneficiary(Long cusBeneficiaryId, Long accountNumber, AccountType accountType, String approved, Long beneficiaryAccountNo, String beneficiaryName, Active active) {
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
+
+
+    public CusBeneficiary(Long cusBeneficiaryId, Account account, AccountType accountType, String approved, String beneficiaryName, Active active, Customer customer) {
         this.cusBeneficiaryId = cusBeneficiaryId;
-        this.accountNumber = accountNumber;
+        this.account = account;
         this.accountType = accountType;
         this.approved = approved;
-        this.beneficiaryAccountNo = beneficiaryAccountNo;
         this.beneficiaryName = beneficiaryName;
         this.active = active;
+        this.customer = customer;
     }
 
     public CusBeneficiary() {
@@ -54,12 +61,12 @@ public class CusBeneficiary {
         this.cusBeneficiaryId = cusBeneficiaryId;
     }
 
-    public Long getAccountNumber() {
-        return accountNumber;
+    public Account getAccount() {
+        return account;
     }
 
-    public void setAccountNumber(Long accountNumber) {
-        this.accountNumber = accountNumber;
+    public void setAccount(Account account) {
+        this.account = account;
     }
 
     public AccountType getAccountType() {
@@ -78,14 +85,6 @@ public class CusBeneficiary {
         this.approved = approved;
     }
 
-    public Long getBeneficiaryAccountNo() {
-        return beneficiaryAccountNo;
-    }
-
-    public void setBeneficiaryAccountNo(Long beneficiaryAccountNo) {
-        this.beneficiaryAccountNo = beneficiaryAccountNo;
-    }
-
     public String getBeneficiaryName() {
         return beneficiaryName;
     }
@@ -102,16 +101,24 @@ public class CusBeneficiary {
         this.active = active;
     }
 
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
     @Override
     public String toString() {
         return "CusBeneficiary{" +
                 "cusBeneficiaryId=" + cusBeneficiaryId +
-                ", accountNumber=" + accountNumber +
+                ", account=" + account +
                 ", accountType=" + accountType +
                 ", approved='" + approved + '\'' +
-                ", beneficiaryAccountNo=" + beneficiaryAccountNo +
                 ", beneficiaryName='" + beneficiaryName + '\'' +
                 ", active=" + active +
+                ", customer=" + customer +
                 '}';
     }
 }
