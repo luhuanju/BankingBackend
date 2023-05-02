@@ -14,10 +14,6 @@ public class Transaction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long transactionId;
 
-    @ManyToOne
-    @JoinColumn(name="account_id", nullable=false)
-    private Account account;
-
     @Column(name = "date")
     private Date date;
 
@@ -29,6 +25,10 @@ public class Transaction {
 
     @Enumerated(EnumType.STRING)
     private DBCR dbcr;
+
+    @ManyToOne
+    @JoinColumn(name="account_id", nullable=false)
+    private Account account;
 
     public Transaction(Long transactionId, Account account, Date date, String reference, Long amount, DBCR dbcr) {
         this.transactionId = transactionId;

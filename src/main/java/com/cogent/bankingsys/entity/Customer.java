@@ -2,6 +2,8 @@ package com.cogent.bankingsys.entity;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+
 @Entity
 @Table(name = "customer")
 public class Customer {
@@ -12,8 +14,8 @@ public class Customer {
     @Column(name = "userName")
     private String username;
 
-    @Column(name = "fullname")
-    private String fullname;
+    @Column(name = "fullName")
+    private String fullName;
 
     @Column(name = "password")
     private String password;
@@ -21,11 +23,8 @@ public class Customer {
     @Column(name = "phone")
     private String phone;
 
-    @Column(name = "pan")
-    private String pan;
-
-    @Column(name = "aadhar")
-    private String aadhar;
+    @Column(name = "identityID")
+    private String identityID;
 
     @Column(name = "secretQuestion")
     private String secretQuestion;
@@ -33,22 +32,27 @@ public class Customer {
     @Column(name = "secretAnswer")
     private String secretAnswer;
 
-    // #ToDo: multi part/image for pan and aarchar
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "customer", cascade = CascadeType.ALL)
+    private ArrayList<Account> account = new ArrayList<>();
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "customer", cascade = CascadeType.ALL)
+    private ArrayList<CusBeneficiary> cusBeneficiary = new ArrayList<>();
+
+    public Customer(Long customerId, String username, String fullName, String password, String phone, String identityID, String secretQuestion, String secretAnswer, ArrayList<Account> account, ArrayList<CusBeneficiary> cusBeneficiary) {
+        this.customerId = customerId;
+        this.username = username;
+        this.fullName = fullName;
+        this.password = password;
+        this.phone = phone;
+        this.identityID = identityID;
+        this.secretQuestion = secretQuestion;
+        this.secretAnswer = secretAnswer;
+        this.account = account;
+        this.cusBeneficiary = cusBeneficiary;
+    }
 
     public Customer() {
 
-    }
-
-    public Customer(Long customerId, String username, String fullname, String password, String phone, String pan, String aadhar, String secretQuestion, String secretAnswer) {
-        this.customerId = customerId;
-        this.username = username;
-        this.fullname = fullname;
-        this.password = password;
-        this.phone = phone;
-        this.pan = pan;
-        this.aadhar = aadhar;
-        this.secretQuestion = secretQuestion;
-        this.secretAnswer = secretAnswer;
     }
 
     public Long getCustomerId() {
@@ -67,12 +71,12 @@ public class Customer {
         this.username = username;
     }
 
-    public String getFullname() {
-        return fullname;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setFullname(String fullname) {
-        this.fullname = fullname;
+    public void setFullName(String fullname) {
+        this.fullName = fullName;
     }
 
     public String getPassword() {
@@ -91,20 +95,12 @@ public class Customer {
         this.phone = phone;
     }
 
-    public String getPan() {
-        return pan;
+    public String getIdentityID() {
+        return identityID;
     }
 
-    public void setPan(String pan) {
-        this.pan = pan;
-    }
-
-    public String getAadhar() {
-        return aadhar;
-    }
-
-    public void setAadhar(String aadhar) {
-        this.aadhar = aadhar;
+    public void setIdentityID(String identityID) {
+        this.identityID = identityID;
     }
 
     public String getSecretQuestion() {
@@ -123,18 +119,35 @@ public class Customer {
         this.secretAnswer = secretAnswer;
     }
 
+    public ArrayList<Account> getAccount() {
+        return account;
+    }
+
+    public void setAccount(ArrayList<Account> account) {
+        this.account = account;
+    }
+
+    public ArrayList<CusBeneficiary> getCusBeneficiary() {
+        return cusBeneficiary;
+    }
+
+    public void setCusBeneficiary(ArrayList<CusBeneficiary> cusBeneficiary) {
+        this.cusBeneficiary = cusBeneficiary;
+    }
+
     @Override
     public String toString() {
         return "Customer{" +
                 "customerId=" + customerId +
                 ", username='" + username + '\'' +
-                ", fullname='" + fullname + '\'' +
+                ", fullName='" + fullName + '\'' +
                 ", password='" + password + '\'' +
                 ", phone='" + phone + '\'' +
-                ", pan='" + pan + '\'' +
-                ", aadhar='" + aadhar + '\'' +
+                ", identityID='" + identityID + '\'' +
                 ", secretQuestion='" + secretQuestion + '\'' +
                 ", secretAnswer='" + secretAnswer + '\'' +
+                ", account=" + account +
+                ", cusBeneficiary=" + cusBeneficiary +
                 '}';
     }
 }
