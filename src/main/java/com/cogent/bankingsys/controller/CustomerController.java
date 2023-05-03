@@ -30,7 +30,7 @@ public class CustomerController {
     }
 
     @PutMapping(value = "/updateCustomer/{id}")
-    public ResponseEntity<Customer> udpateCustomer (@PathVariable("id") long id, @RequestBody Customer newCustomer){
+    public ResponseEntity<Customer> updateCustomer (@PathVariable("id") long id, @RequestBody Customer newCustomer){
 
         Optional<Customer> existingCust = customerRepo.findById(id);
 

@@ -27,7 +27,8 @@ public class Transaction {
     private DBCR dbcr;
 
     @ManyToOne
-    @JoinColumn(name="account_id", nullable=false)
+//    @JoinColumn(name="account_id", nullable=false)
+    @JoinColumn(name="account_id")
     private Account account;
 
     public Transaction(Long transactionId, Account account, Date date, String reference, Long amount, DBCR dbcr) {
