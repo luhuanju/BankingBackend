@@ -15,10 +15,11 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table
-public class CustomerAccount {
+public class CustomersAccount {
 	
-	public CustomerAccount(int customerId, double accountBalance, String approved, String accountNumber,
-			Date dateOfCreation, AccountType accountType) {
+	public CustomersAccount(int customerId, double accountBalance, String approved, String accountNumber,
+			Date dateOfCreation, AccountType
+			accountType) {
 		super();
 		this.customerId = customerId;
 		this.accountBalance = accountBalance;

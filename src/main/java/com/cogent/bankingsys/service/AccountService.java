@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.cogent.bankingsys.entity.CustomerAccount;
+import com.cogent.bankingsys.entity.CustomersAccount;
 import com.cogent.bankingsys.repo.AccountRepo;
 
 @Service
@@ -14,11 +14,12 @@ public class AccountService {
 	@Autowired
 	private AccountRepo accountRepo;
 
-	public CustomerAccount createAccont(CustomerAccount aCustomerAccount) {
+	public CustomersAccount createAccont(CustomersAccount aCustomerAccount) {
 		return accountRepo.save(aCustomerAccount);
 	}
 
-	public List<CustomerAccount> getAllAccoubnt(int costomerId) {
-		return accountRepo.findAllById(costomerId);
+
+	public List<CustomersAccount> getAllAccoubnt(int costomerId) {
+		return accountRepo.findByCustomerId(costomerId);
 	}
 }
