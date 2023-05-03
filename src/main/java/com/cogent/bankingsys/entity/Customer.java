@@ -3,6 +3,7 @@ package com.cogent.bankingsys.entity;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "customer")
@@ -14,8 +15,8 @@ public class Customer {
     @Column(name = "userName")
     private String username;
 
-    @Column(name = "fullName")
-    private String fullName;
+    @Column(name = "fullname")
+    private String fullname;
 
     @Column(name = "password")
     private String password;
@@ -33,15 +34,15 @@ public class Customer {
     private String secretAnswer;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "customer", cascade = CascadeType.ALL)
-    private ArrayList<Account> account = new ArrayList<>();
+    private List<Account> account = new ArrayList<Account>();
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "customer", cascade = CascadeType.ALL)
-    private ArrayList<CusBeneficiary> cusBeneficiary = new ArrayList<>();
+    private List<CusBeneficiary> cusBeneficiary = new ArrayList<CusBeneficiary>();
 
-    public Customer(Long customerId, String username, String fullName, String password, String phone, String identityID, String secretQuestion, String secretAnswer, ArrayList<Account> account, ArrayList<CusBeneficiary> cusBeneficiary) {
+    public Customer(Long customerId, String username, String fullname, String password, String phone, String identityID, String secretQuestion, String secretAnswer, List<Account> account, List<CusBeneficiary> cusBeneficiary) {
         this.customerId = customerId;
         this.username = username;
-        this.fullName = fullName;
+        this.fullname = fullname;
         this.password = password;
         this.phone = phone;
         this.identityID = identityID;
@@ -71,12 +72,12 @@ public class Customer {
         this.username = username;
     }
 
-    public String getFullName() {
-        return fullName;
+    public String getFullname() {
+        return fullname;
     }
 
-    public void setFullName(String fullname) {
-        this.fullName = fullName;
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
     }
 
     public String getPassword() {
@@ -119,19 +120,19 @@ public class Customer {
         this.secretAnswer = secretAnswer;
     }
 
-    public ArrayList<Account> getAccount() {
+    public List<Account> getAccount() {
         return account;
     }
 
-    public void setAccount(ArrayList<Account> account) {
+    public void setAccount(List<Account> account) {
         this.account = account;
     }
 
-    public ArrayList<CusBeneficiary> getCusBeneficiary() {
+    public List<CusBeneficiary> getCusBeneficiary() {
         return cusBeneficiary;
     }
 
-    public void setCusBeneficiary(ArrayList<CusBeneficiary> cusBeneficiary) {
+    public void setCusBeneficiary(List<CusBeneficiary> cusBeneficiary) {
         this.cusBeneficiary = cusBeneficiary;
     }
 
@@ -140,7 +141,7 @@ public class Customer {
         return "Customer{" +
                 "customerId=" + customerId +
                 ", username='" + username + '\'' +
-                ", fullName='" + fullName + '\'' +
+                ", fullname='" + fullname + '\'' +
                 ", password='" + password + '\'' +
                 ", phone='" + phone + '\'' +
                 ", identityID='" + identityID + '\'' +
