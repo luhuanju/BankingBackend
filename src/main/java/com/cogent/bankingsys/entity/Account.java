@@ -6,7 +6,7 @@ import com.cogent.bankingsys.entity.enumClass.AccountType;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Table(name = "account")
@@ -41,12 +41,12 @@ public class Account {
     private Customer customer;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy="account", cascade = CascadeType.ALL)
-    private ArrayList<Transaction> transaction = new ArrayList<>();
+    private List<Transaction> transaction = new ArrayList<Transaction>();
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "account", cascade = CascadeType.ALL)
-    private ArrayList<CusBeneficiary> cusBeneficiary = new ArrayList<>();
+    private List<CusBeneficiary> cusBeneficiary = new ArrayList<CusBeneficiary>();
 
-    public Account(Long accountId, Long accountNumber, AccountType accountType, Long accountBalance, String approved, Date dateOfCreation, AccountStatus accountStatus, Customer customer, ArrayList<Transaction> transaction, ArrayList<CusBeneficiary> cusBeneficiary) {
+    public Account(Long accountId, Long accountNumber, AccountType accountType, Long accountBalance, String approved, Date dateOfCreation, AccountStatus accountStatus, Customer customer, List<Transaction> transaction, List<CusBeneficiary> cusBeneficiary) {
         this.accountId = accountId;
         this.accountNumber = accountNumber;
         this.accountType = accountType;
@@ -57,6 +57,10 @@ public class Account {
         this.customer = customer;
         this.transaction = transaction;
         this.cusBeneficiary = cusBeneficiary;
+    }
+
+    public Account() {
+
     }
 
     public Long getAccountId() {
@@ -123,19 +127,19 @@ public class Account {
         this.customer = customer;
     }
 
-    public ArrayList<Transaction> getTransaction() {
+    public List<Transaction> getTransaction() {
         return transaction;
     }
 
-    public void setTransaction(ArrayList<Transaction> transaction) {
+    public void setTransaction(List<Transaction> transaction) {
         this.transaction = transaction;
     }
 
-    public ArrayList<CusBeneficiary> getCusBeneficiary() {
+    public List<CusBeneficiary> getCusBeneficiary() {
         return cusBeneficiary;
     }
 
-    public void setCusBeneficiary(ArrayList<CusBeneficiary> cusBeneficiary) {
+    public void setCusBeneficiary(List<CusBeneficiary> cusBeneficiary) {
         this.cusBeneficiary = cusBeneficiary;
     }
 
