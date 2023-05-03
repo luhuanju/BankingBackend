@@ -1,11 +1,7 @@
 package com.cogent.bankingsys.controller;
 
 import com.cogent.bankingsys.entity.CusBeneficiary;
-import com.cogent.bankingsys.entity.Customer;
-import com.cogent.bankingsys.entity.Transaction;
 import com.cogent.bankingsys.repo.CusBeneRepo;
-import com.cogent.bankingsys.repo.CustomerRepo;
-import com.cogent.bankingsys.repo.TransactionRepo;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

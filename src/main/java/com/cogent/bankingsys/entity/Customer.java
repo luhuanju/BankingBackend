@@ -1,5 +1,7 @@
 package com.cogent.bankingsys.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -34,12 +36,13 @@ public class Customer {
     private String secretAnswer;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "customer", cascade = CascadeType.ALL)
-    private List<Account> account = new ArrayList<Account>();
+    @JsonIgnoreProperties("customer")
+    private List<Account> accountList = new ArrayList<>();
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "customer", cascade = CascadeType.ALL)
-    private List<CusBeneficiary> cusBeneficiary = new ArrayList<CusBeneficiary>();
+    private List<CusBeneficiary> cusBeneficiary = new ArrayList<>();
 
-    public Customer(Long customerId, String username, String fullname, String password, String phone, String identityID, String secretQuestion, String secretAnswer, List<Account> account, List<CusBeneficiary> cusBeneficiary) {
+    public Customer(Long customerId, String username, String fullname, String password, String phone, String identityID, String secretQuestion, String secretAnswer, List<Account> accountList, List<CusBeneficiary> cusBeneficiary) {
         this.customerId = customerId;
         this.username = username;
         this.fullname = fullname;
@@ -48,7 +51,7 @@ public class Customer {
         this.identityID = identityID;
         this.secretQuestion = secretQuestion;
         this.secretAnswer = secretAnswer;
-        this.account = account;
+        this.accountList = accountList;
         this.cusBeneficiary = cusBeneficiary;
     }
 
@@ -120,12 +123,12 @@ public class Customer {
         this.secretAnswer = secretAnswer;
     }
 
-    public List<Account> getAccount() {
-        return account;
+    public List<Account> getAccountList() {
+        return accountList;
     }
 
-    public void setAccount(List<Account> account) {
-        this.account = account;
+    public void setAccountList(List<Account> accountList) {
+        this.accountList = accountList;
     }
 
     public List<CusBeneficiary> getCusBeneficiary() {
@@ -147,7 +150,7 @@ public class Customer {
                 ", identityID='" + identityID + '\'' +
                 ", secretQuestion='" + secretQuestion + '\'' +
                 ", secretAnswer='" + secretAnswer + '\'' +
-                ", account=" + account +
+                ", accountList=" + accountList +
                 ", cusBeneficiary=" + cusBeneficiary +
                 '}';
     }

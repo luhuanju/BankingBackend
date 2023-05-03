@@ -1,6 +1,7 @@
 package com.cogent.bankingsys.entity;
 
 import com.cogent.bankingsys.entity.enumClass.AccountStatus;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import com.cogent.bankingsys.entity.enumClass.AccountType;
 
@@ -36,15 +37,16 @@ public class Account {
     @Enumerated(EnumType.STRING)
     private AccountStatus accountStatus;
 
-    @ManyToOne
-    @JoinColumn(name = "customer_id")
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "customer_id", referencedColumnName = "customerId")
+    @JsonIgnoreProperties("accountList")
     private Customer customer;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy="account", cascade = CascadeType.ALL)
-    private List<Transaction> transaction = new ArrayList<Transaction>();
+    private List<Transaction> transaction = new ArrayList<>();
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "account", cascade = CascadeType.ALL)
-    private List<CusBeneficiary> cusBeneficiary = new ArrayList<CusBeneficiary>();
+    private List<CusBeneficiary> cusBeneficiary = new ArrayList<>();
 
     public Account(Long accountId, Long accountNumber, AccountType accountType, Long accountBalance, String approved, Date dateOfCreation, AccountStatus accountStatus, Customer customer, List<Transaction> transaction, List<CusBeneficiary> cusBeneficiary) {
         this.accountId = accountId;
