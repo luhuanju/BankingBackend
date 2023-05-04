@@ -9,6 +9,7 @@ import java.util.Random;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,6 +24,8 @@ import com.cogent.bankingsys.service.BeneficiaryService;
 import jakarta.validation.Valid;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200/")
+
 public class CustomerAccountController {
 
 	@Autowired
@@ -56,7 +59,7 @@ public class CustomerAccountController {
 	 * @return
 	 */
 	@GetMapping("/api/customer/{customerID}/acocunt")
-	public ResponseEntity<List<CustomersAccount>> createAccount(@PathVariable Integer customerID) {
+	public ResponseEntity<List<CustomersAccount>> getAccountList(@PathVariable Integer customerID) {
 		List<CustomersAccount> accountList = accountService.getAllAccoubnt(customerID);
 		return new ResponseEntity<>(accountList, HttpStatus.OK);
 	}
@@ -82,6 +85,17 @@ public class CustomerAccountController {
 			message.put("message", "Beneficiary with <"+account.getAccountNumber()+"> added!");
 			return new ResponseEntity<Map<String, String>>(message, HttpStatus.OK);
 		}
+	}
+
+	/**
+	 * 
+	 * @param customerID
+	 * @return
+	 */
+	@GetMapping("/api/customer/{customerID}/beneficiary")
+	public ResponseEntity<List<BeneficiaryAccount>> getBeneficaryList(@Valid @PathVariable Integer customerID) {
+		List<BeneficiaryAccount> accountList = beneficiaryService.getBeneficiaryAccounts(customerID);
+		return new ResponseEntity<>(accountList, HttpStatus.OK);
 	}
 
 }

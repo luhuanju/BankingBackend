@@ -1,5 +1,7 @@
 package com.cogent.bankingsys.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,5 +16,9 @@ public class BeneficiaryService {
 
 	public BeneficiaryAccount createAccont(BeneficiaryAccount account) {
 		return beneficiaryRepo.save(account);
+	}
+
+	public List<BeneficiaryAccount> getBeneficiaryAccounts(Integer accountId) {
+		return beneficiaryRepo.findByCustomerId(accountId);
 	}
 }

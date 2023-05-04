@@ -29,6 +29,8 @@ public class CustomersAccount {
 		this.accountType = accountType;
 	}
 
+	public CustomersAccount() {
+	}
 	private int customerId;
 
 	@Id

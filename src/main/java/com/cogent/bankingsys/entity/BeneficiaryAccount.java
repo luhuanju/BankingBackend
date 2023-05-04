@@ -3,6 +3,8 @@ package com.cogent.bankingsys.entity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
@@ -10,7 +12,12 @@ import jakarta.validation.constraints.NotBlank;
 @Entity
 @Table
 public class BeneficiaryAccount {
+
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
+
+	@NotBlank
 	private int customerId;
 
 	@NotBlank
@@ -20,6 +27,19 @@ public class BeneficiaryAccount {
 	private AccountType accountType;
 
 	private String approved;
+
+	public BeneficiaryAccount() {
+		super();
+	}
+
+	public BeneficiaryAccount(int customerId, @NotBlank String accountNumber, AccountType accountType,
+			String approved) {
+		super();
+		this.customerId = customerId;
+		this.accountNumber = accountNumber;
+		this.accountType = accountType;
+		this.approved = approved;
+	}
 
 	@Override
 	public String toString() {
