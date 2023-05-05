@@ -17,3 +17,13 @@ docs/
 build/
 reports/
 
+.DS_Store
+.classpath
+.project
+.settings
+.metadata
+
+.settings/
+
+# Ignore application properties
+src/main/resources/application.properties
