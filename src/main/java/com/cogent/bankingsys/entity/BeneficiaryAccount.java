@@ -17,6 +17,7 @@ public class BeneficiaryAccount {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
+
 	@NotBlank
 	private int customerId;
 
@@ -32,19 +33,29 @@ public class BeneficiaryAccount {
 		super();
 	}
 
-	public BeneficiaryAccount(int customerId, @NotBlank String accountNumber, AccountType accountType,
+	public BeneficiaryAccount(int id, int customerId, @NotBlank String accountNumber, AccountType accountType,
 			String approved) {
 		super();
+		this.id = id;
 		this.customerId = customerId;
 		this.accountNumber = accountNumber;
 		this.accountType = accountType;
 		this.approved = approved;
 	}
 
+
 	@Override
 	public String toString() {
-		return "BeneficiaryAccount [customerId=" + customerId + ", accountNumber=" + accountNumber + ", accountType="
-				+ accountType + ", approved=" + approved + "]";
+		return "BeneficiaryAccount [id=" + id + ", customerId=" + customerId + ", accountNumber=" + accountNumber
+				+ ", accountType=" + accountType + ", approved=" + approved + "]";
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public int getCustomerId() {

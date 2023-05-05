@@ -21,4 +21,8 @@ public class BeneficiaryService {
 	public List<BeneficiaryAccount> getBeneficiaryAccounts(Integer accountId) {
 		return beneficiaryRepo.findByCustomerId(accountId);
 	}
+
+	public void deleteBeneficiaryAccounts(Integer id) {
+		beneficiaryRepo.deleteById(id);
+	}
 }
