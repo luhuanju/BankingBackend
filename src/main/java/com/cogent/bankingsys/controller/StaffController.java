@@ -40,6 +40,7 @@ public class StaffController {
 		}else{
 			LocalDate currentDate = LocalDate.now();
 			newStaff.setStuffAddedDate(currentDate);
+			newStaff.setStatus(Staff.Status.DISABLED);
 			return staffRepository.save(newStaff);   //insert SQL - jdbc- MySQL
 		}
 
@@ -51,7 +52,7 @@ public class StaffController {
 
 
 	@GetMapping()
-	public List<StaffRepository.staffIdAndstaffUserNameAndStatusProjection> getStaff() {
+	public List<StaffRepository.staffFullNameAndstaffUserNameAndStatusProjection> getStaff() {
 
 		return staffRepository.findAllBy();
 		
