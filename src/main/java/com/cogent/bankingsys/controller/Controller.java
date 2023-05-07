@@ -13,9 +13,9 @@ public class Controller {
 		return "Hello";
 	}
 
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public String showLoginPage() {
-		return "login";
-	}
+//	@RequestMapping(value = "/login", method = RequestMethod.GET)
+//	public String showLoginPage() {
+//		return "login";
+//	}
 
 }

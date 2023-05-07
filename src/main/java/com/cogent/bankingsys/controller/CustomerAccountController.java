@@ -25,7 +25,7 @@ import com.cogent.bankingsys.service.BeneficiaryService;
 import jakarta.validation.Valid;
 
 @RestController
-//@CrossOrigin(origins = "http://localhost:4200/")
+@CrossOrigin(origins = "http://localhost:4200/")
 
 public class CustomerAccountController {
 
@@ -54,16 +54,16 @@ public class CustomerAccountController {
 //		return new ResponseEntity<>(customerAccount, HttpStatus.OK);
 //	}
 
-//	/**
-//	 * Get Account List by ID
-//	 * @param customerID
-//	 * @return
-//	 */
-//	@GetMapping("/api/customer/{customerID}/acocunt")
-//	public ResponseEntity<List<CustomersAccount>> getAccountList(@PathVariable Integer customerID) {
-//		List<CustomersAccount> accountList = accountService.getAllAccoubnt(customerID);
-//		return new ResponseEntity<>(accountList, HttpStatus.OK);
-//	}
+	/**
+	 * Get Account List by ID
+	 * @param customerID
+	 * @return
+	 */
+	@GetMapping("/api/customer/{customerID}/acocunt")
+	public ResponseEntity<List<CustomersAccount>> getAccountList(@PathVariable Integer customerID) {
+		List<CustomersAccount> accountList = accountService.getAllAccoubnt(customerID);
+		return new ResponseEntity<>(accountList, HttpStatus.OK);
+	}
 
 	/**
 	 * 
@@ -103,7 +103,6 @@ public class CustomerAccountController {
 	 * deleteBeneficary
 	 * 
 	 * @param customerID
-	 * @param beneficaryId
 	 * @return
 	 */
 	@DeleteMapping("/api/customer/{customerID}/beneficiary/{beneficiaryID}")

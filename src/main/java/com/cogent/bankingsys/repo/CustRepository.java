@@ -11,5 +11,5 @@ public interface CustRepository extends JpaRepository<Customer, Long> {
 
     @Override
     Optional<Customer> findById(Long along);
-
+    Optional<Customer> findByUsernameAndPassword(String username,String password);
 }

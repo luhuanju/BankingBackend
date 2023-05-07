@@ -16,4 +16,6 @@ public interface CustService {
     List<Customer> findAll();
 
     public Customer saveOrUpdate(Customer customer);
+
+    Optional<Customer> findCustomerByUserName(String name,String pwd);
 }

@@ -38,5 +38,8 @@ public class CustServiceImpl implements CustService {
         return customerRepo.save(customer);
     }
 
-
+    @Override
+    public Optional<Customer> findCustomerByUserName(String name,String pwd) {
+        return customerRepo.findByUsernameAndPassword(name,pwd);
+    }
 }

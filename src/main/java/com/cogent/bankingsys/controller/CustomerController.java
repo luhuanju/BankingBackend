@@ -4,6 +4,7 @@ import com.cogent.bankingsys.entity.Account;
 import com.cogent.bankingsys.entity.Customer;
 import com.cogent.bankingsys.service.AccService;
 import com.cogent.bankingsys.service.CustService;
+import com.cogent.bankingsys.service.serviceImpl.CustServiceImpl;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,11 +16,11 @@ import java.util.Optional;
 import java.util.Random;
 
 @RestController
-
+@CrossOrigin("*")
 public class CustomerController {
 
    @Autowired
-   private CustService custService;
+   private CustServiceImpl custService;
 
     @Autowired
     private AccService accService;
@@ -30,9 +31,18 @@ public class CustomerController {
      * @return
      */
     @PostMapping(value = "/api/customer/register")
-    public ResponseEntity<Customer> saveCustomer(@Valid @RequestBody Customer customer){
+    public ResponseEntity<Customer> register(@Valid @RequestBody Customer customer){
         Customer customerResp = custService.saveCustomer(customer);
+        System.out.print(customerResp);
         return new ResponseEntity<>(customerResp, HttpStatus.OK);
+    }
+    @GetMapping(value = "/api/customer/login/{username}/{password}")
+    public ResponseEntity<Customer> login(@Valid @PathVariable String username,@Valid @PathVariable String password){
+        if (Optional.of(username).isEmpty()|| Optional.of(password).isEmpty()) return new ResponseEntity<>(HttpStatus.OK);
+        Optional<Customer> customer = custService.findCustomerByUserName(username,password);
+        if(customer.isEmpty()) return new ResponseEntity<>(HttpStatus.OK);
+        System.out.print(customer);
+        return new ResponseEntity<>(customer.get(),HttpStatus.OK);
     }
 
     /**

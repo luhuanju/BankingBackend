@@ -24,6 +24,14 @@ reports/
 .metadata
 
 .settings/
+# Ignore the bin directory
+bin/
+
+# Ignore the .settings directory and its contents
+.settings/
+
+# Ignore the target directory and its contents
+target/
 
 # Ignore application properties
 src/main/resources/application.properties
