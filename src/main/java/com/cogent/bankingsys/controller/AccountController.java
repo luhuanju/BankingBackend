@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @RestController
@@ -48,6 +49,11 @@ public class AccountController {
     @GetMapping(value = "/api/customer/getCustomer")
     public List<Customer> getCustomer(){
         return custService.findAll();
+    }
+
+    @GetMapping(value = "/api/staff/account/{accountNo}")
+    public Optional<Customer> getStatement(@Valid @PathVariable Long accountNo){
+        return custService.findByCustomerId(accountNo);
     }
 
 //    @GetMapping(value = "/api/customer/{customerId}")

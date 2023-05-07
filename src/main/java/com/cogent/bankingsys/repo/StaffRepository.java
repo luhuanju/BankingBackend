@@ -10,9 +10,10 @@ import java.util.Optional;
 public interface StaffRepository extends JpaRepository<Staff, Long> {
 
     Optional<Staff> findBystaffUserName(String staffUserName);
-    List<staffIdAndstaffUserNameAndStatusProjection> findAllBy();
-    interface staffIdAndstaffUserNameAndStatusProjection {
-        String getStaffId();
+    List<staffFullNameAndstaffUserNameAndStatusProjection> findAllBy();
+    interface staffFullNameAndstaffUserNameAndStatusProjection {
+        Long getStaffId();
+        String getStaffFullName();
         String getStaffUserName();
         Enum getStatus();
 

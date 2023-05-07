@@ -1,22 +1,23 @@
 package com.cogent.bankingsys.controller;
 
-import java.time.LocalDate;
-import java.util.List;
-import java.util.Optional;
-
+import com.cogent.bankingsys.entity.Staff;
 import com.cogent.bankingsys.errhandle.AlreadyExistException;
+import com.cogent.bankingsys.errhandle.ResourceNotFoundException;
+import com.cogent.bankingsys.repo.StaffRepository;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import jakarta.validation.Valid;
-import com.cogent.bankingsys.entity.Staff;
-import com.cogent.bankingsys.repo.StaffRepository;
-import com.cogent.bankingsys.errhandle.ResourceNotFoundException;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
+
 
 @RestController
 @RequestMapping("/api/admin/staff")
+@CrossOrigin(origins = "*")
 public class StaffController {
 
 //	HTTP Methods
@@ -28,7 +29,7 @@ public class StaffController {
 
 	@Autowired
 	StaffRepository staffRepository;
-	
+
 
 	@PostMapping()          //So @Valid - need to Activate Validation
 	public Staff addStaff(@Valid @RequestBody Staff newStaff) {
@@ -39,6 +40,7 @@ public class StaffController {
 		}else{
 			LocalDate currentDate = LocalDate.now();
 			newStaff.setStuffAddedDate(currentDate);
+			newStaff.setStatus(Staff.Status.DISABLED);
 			return staffRepository.save(newStaff);   //insert SQL - jdbc- MySQL
 		}
 
@@ -50,7 +52,7 @@ public class StaffController {
 
 
 	@GetMapping()
-	public List<StaffRepository.staffIdAndstaffUserNameAndStatusProjection> getStaff() {
+	public List<StaffRepository.staffFullNameAndstaffUserNameAndStatusProjection> getStaff() {
 
 		return staffRepository.findAllBy();
 		
