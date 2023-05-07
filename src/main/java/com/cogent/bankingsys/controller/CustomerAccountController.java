@@ -25,7 +25,7 @@ import com.cogent.bankingsys.service.BeneficiaryService;
 import jakarta.validation.Valid;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200/")
+//@CrossOrigin(origins = "http://localhost:4200/")
 
 public class CustomerAccountController {
 
@@ -36,34 +36,34 @@ public class CustomerAccountController {
 	private BeneficiaryService beneficiaryService;
 
 
-	/**
-	 * Create Account
-	 * @param customerID
-	 * @param account
-	 * @return
-	 */
-	@PostMapping("/api/customer/{customerID}/acocunt")
-	public ResponseEntity<CustomersAccount> createAccount(@PathVariable Integer customerID,
-			@Valid @RequestBody CustomersAccount account) {
-		int accountnumber = 1000000 + new Random().nextInt(9000000);
-		account.setCustomerId(customerID);
-		account.setAccountNumber("" + accountnumber);
-		account.setApproved("No");
-		account.setDateOfCreation(new Date());
-		CustomersAccount customerAccount = accountService.createAccont(account);
-		return new ResponseEntity<>(customerAccount, HttpStatus.OK);
-	}
+//	/**
+//	 * Create Account
+//	 * @param customerID
+//	 * @param account
+//	 * @return
+//	 */
+//	@PostMapping("/api/customer/{customerID}/acocunt")
+//	public ResponseEntity<CustomersAccount> createAccount(@PathVariable Integer customerID,
+//			@Valid @RequestBody CustomersAccount account) {
+//		int accountnumber = 1000000 + new Random().nextInt(9000000);
+//		account.setCustomerId(customerID);
+//		account.setAccountNumber("" + accountnumber);
+//		account.setApproved("No");
+//		account.setDateOfCreation(new Date());
+//		CustomersAccount customerAccount = accountService.createAccont(account);
+//		return new ResponseEntity<>(customerAccount, HttpStatus.OK);
+//	}
 
-	/**
-	 * Get Account List by ID
-	 * @param customerID
-	 * @return
-	 */
-	@GetMapping("/api/customer/{customerID}/acocunt")
-	public ResponseEntity<List<CustomersAccount>> getAccountList(@PathVariable Integer customerID) {
-		List<CustomersAccount> accountList = accountService.getAllAccoubnt(customerID);
-		return new ResponseEntity<>(accountList, HttpStatus.OK);
-	}
+//	/**
+//	 * Get Account List by ID
+//	 * @param customerID
+//	 * @return
+//	 */
+//	@GetMapping("/api/customer/{customerID}/acocunt")
+//	public ResponseEntity<List<CustomersAccount>> getAccountList(@PathVariable Integer customerID) {
+//		List<CustomersAccount> accountList = accountService.getAllAccoubnt(customerID);
+//		return new ResponseEntity<>(accountList, HttpStatus.OK);
+//	}
 
 	/**
 	 * 
