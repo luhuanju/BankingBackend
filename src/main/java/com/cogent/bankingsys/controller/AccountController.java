@@ -2,9 +2,11 @@ package com.cogent.bankingsys.controller;
 
 import com.cogent.bankingsys.entity.Account;
 import com.cogent.bankingsys.entity.Customer;
+import com.cogent.bankingsys.entity.Payload;
 import com.cogent.bankingsys.entity.Transaction;
 import com.cogent.bankingsys.service.AccService;
 import com.cogent.bankingsys.service.CustService;
+import com.cogent.bankingsys.service.PayloadService;
 import com.cogent.bankingsys.service.TransactionService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,9 @@ public class AccountController {
 
     @Autowired
     private TransactionService transactionService;
+
+    @Autowired
+    private PayloadService payloadService;
 
 //    @PostMapping(value = "/api/customer/{customerId}/acocunt")
 //    public ResponseEntity<Account> saveAccount(@PathVariable Long customerId,
@@ -101,6 +106,21 @@ public class AccountController {
         }
 
     }
+
+    /**
+     * PUT(/api/customer/getPayload)
+     * @return
+     */
+    @GetMapping (value = "/api/customer/getPayload")
+    public List<Payload> getPayload(){
+//        @Valid @PathVariable long fromAccNo, @Valid @PathVariable long toAccNo,
+//        payload.setFromAccNumber(fromAccNo);
+//        payload.setToAccNumber(toAccNo);
+        List<Payload> payloadList = payloadService.findAll();
+
+        return payloadList;
+    }
+
 
 
 
