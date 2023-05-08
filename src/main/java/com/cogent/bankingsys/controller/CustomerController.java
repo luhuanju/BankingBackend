@@ -8,6 +8,7 @@ import com.cogent.bankingsys.service.AccService;
 import com.cogent.bankingsys.service.CustService;
 import com.cogent.bankingsys.service.PayloadService;
 import com.cogent.bankingsys.service.TransactionService;
+import com.cogent.bankingsys.service.serviceImpl.AccServiceImpl;
 import com.cogent.bankingsys.service.serviceImpl.CustServiceImpl;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,7 @@ public class CustomerController {
    private CustServiceImpl custService;
 
     @Autowired
-    private AccService accService;
+    private AccServiceImpl accService;
 
     @Autowired
     private PayloadService payloadService;

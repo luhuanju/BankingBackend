@@ -19,18 +19,18 @@ public abstract class AccountRepoImpl implements AccountRepo {
 	@PersistenceContext
 	private EntityManager entityManager;
 
-	@Override
-	public List<CustomersAccount> findByCustomerId(int id) {
-		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-		CriteriaQuery<CustomersAccount> criteriaQuery = criteriaBuilder.createQuery(CustomersAccount.class);
-
-		Root<CustomersAccount> root = criteriaQuery.from(CustomersAccount.class);
-		criteriaQuery.select(root);
-		criteriaQuery.where(criteriaBuilder.equal(root.get("customer_id"), id));
-		TypedQuery<CustomersAccount> query = entityManager.createQuery(criteriaQuery);
-		return query.getResultList();
-
-
-	}
+//	@Override
+//	public List<CustomersAccount> findByCustomerId(int id) {
+//		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+//		CriteriaQuery<CustomersAccount> criteriaQuery = criteriaBuilder.createQuery(CustomersAccount.class);
+//
+//		Root<CustomersAccount> root = criteriaQuery.from(CustomersAccount.class);
+//		criteriaQuery.select(root);
+//		criteriaQuery.where(criteriaBuilder.equal(root.get("customer_id"), id));
+//		TypedQuery<CustomersAccount> query = entityManager.createQuery(criteriaQuery);
+//		return query.getResultList();
+//
+//
+//	}
 
 }
