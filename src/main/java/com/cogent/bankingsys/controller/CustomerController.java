@@ -2,8 +2,10 @@ package com.cogent.bankingsys.controller;
 
 import com.cogent.bankingsys.entity.Account;
 import com.cogent.bankingsys.entity.Customer;
+import com.cogent.bankingsys.entity.Payload;
 import com.cogent.bankingsys.service.AccService;
 import com.cogent.bankingsys.service.CustService;
+import com.cogent.bankingsys.service.PayloadService;
 import com.cogent.bankingsys.service.serviceImpl.CustServiceImpl;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,9 @@ public class CustomerController {
 
     @Autowired
     private AccService accService;
+
+    @Autowired
+    private PayloadService payloadService;
 
     /**
      * customer register; create customer
@@ -147,6 +152,21 @@ public class CustomerController {
         Account account = accService.findByAccountNumber(accountID);
 
         return account;
+    }
+
+    /**
+     * PUT(/api/customer/transfer)
+     */
+    @PutMapping (value = "/api/customer/transfer")
+    public ResponseEntity<Payload> savePayload(@Valid @RequestBody Payload payload){
+//        @Valid @PathVariable long fromAccNo, @Valid @PathVariable long toAccNo,
+//        payload.setFromAccNumber(fromAccNo);
+//        payload.setToAccNumber(toAccNo);
+//        payload.setFromAccNumber(fromAccNo);
+        System.out.println(payload.toString());
+        Payload payloadResp = payloadService.savePayload(payload);
+        System.out.println(payloadResp.toString());
+        return new ResponseEntity<>(payloadResp, HttpStatus.OK);
     }
 
 
