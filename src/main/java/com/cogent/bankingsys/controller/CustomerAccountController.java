@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import com.cogent.bankingsys.entity.Account;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -60,8 +61,8 @@ public class CustomerAccountController {
 	 * @return
 	 */
 	@GetMapping("/api/customer/{customerID}/acocunt")
-	public ResponseEntity<List<CustomersAccount>> getAccountList(@PathVariable Integer customerID) {
-		List<CustomersAccount> accountList = accountService.getAllAccoubnt(customerID);
+	public ResponseEntity<List<Account>> getAccountList(@PathVariable Long customerID) {
+		List<Account> accountList = accountService.getAllAccoubnt(customerID);
 		return new ResponseEntity<>(accountList, HttpStatus.OK);
 	}
 

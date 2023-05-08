@@ -2,6 +2,7 @@ package com.cogent.bankingsys.service;
 
 import java.util.List;
 
+import com.cogent.bankingsys.entity.Account;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,12 +15,12 @@ public class AccountService {
 	@Autowired
 	private AccountRepo accountRepo;
 
-	public CustomersAccount createAccont(CustomersAccount aCustomerAccount) {
-		return accountRepo.save(aCustomerAccount);
-	}
+//	public CustomersAccount createAccont(Account aCustomerAccount) {
+//		return accountRepo.save(aCustomerAccount);
+//	}
 
 
-	public List<CustomersAccount> getAllAccoubnt(int costomerId) {
+	public List<Account> getAllAccoubnt(long costomerId) {
 		return accountRepo.findByCustomerId(costomerId);
 	}
 }

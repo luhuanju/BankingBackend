@@ -18,7 +18,6 @@ public class BeneficiaryAccount {
 	private int id;
 
 
-	@NotBlank
 	private int customerId;
 
 	@NotBlank
