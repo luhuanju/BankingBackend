@@ -1,5 +1,6 @@
 package com.cogent.bankingsys.controller;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -14,16 +15,41 @@ import com.cogent.bankingsys.repo.BeneficiaryRepository;
 import com.cogent.bankingsys.entity.Beneficiary;
 
 @RestController
-@RequestMapping("/api/staff/beneficiary")
+@RequestMapping()
 @CrossOrigin(origins = "*")
 public class BeneficiaryController {
     @Autowired
     private BeneficiaryRepository beneficiaryRepository;
+    @PostMapping("api/costomer/{customerId}/beneficiary")
+    public ResponseEntity<String> addBeneficiary(@PathVariable Long customerId,
+                                                 @RequestBody Beneficiary beneficiaryRequest) {
 
-    @GetMapping
+        Beneficiary beneficiary = new Beneficiary();
+        beneficiary.setFromCustomer(customerId);
+        beneficiary.setBeneficiaryAcNo(beneficiaryRequest.getBeneficiaryAcNo());
+        LocalDate currentDate = LocalDate.now();
+        beneficiary.setBeneficiaryAddedDate(currentDate);
+        beneficiary.setApproved(beneficiaryRequest.getApproved());
+
+
+        Optional<Beneficiary> optionalBeneficiary = beneficiaryRepository
+                .findByFromCustomerAndBeneficiaryAcNoAndBeneficiaryAddedDate(beneficiary.getFromCustomer(),
+                        beneficiary.getBeneficiaryAcNo(), beneficiary.getBeneficiaryAddedDate());
+
+        if (!optionalBeneficiary.isPresent()) {
+            beneficiaryRepository.save(beneficiary);
+            return ResponseEntity.ok("Beneficiary with account number " + beneficiary.getBeneficiaryAcNo() + " added");
+        }
+        return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                .body("Error Message");
+
+
+
+    }
+    @GetMapping("/api/staff/beneficiary")
     // @PreAuthorize("hasRole('ROLE_STAFF')")
     public ResponseEntity<List<Beneficiary>> getBeneficiariesToApprove() {
-        List<Beneficiary> beneficiariesToApprove = beneficiaryRepository.findByApproved("YES");
+        List<Beneficiary> beneficiariesToApprove = beneficiaryRepository.findByApproved("NO");
         if (beneficiariesToApprove.isEmpty()) {
             return ResponseEntity.ok(new ArrayList<>());
         } else {
@@ -31,7 +57,7 @@ public class BeneficiaryController {
         }
     }
 
-    @PutMapping
+    @PutMapping("/api/staff/beneficiary")
     public ResponseEntity<?> approveBeneficiary(@RequestBody Beneficiary beneficiary) {
         // find the corresponding beneficiary record in the database
         Optional<Beneficiary> optionalBeneficiary = beneficiaryRepository
