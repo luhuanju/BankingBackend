@@ -3,9 +3,11 @@ package com.cogent.bankingsys.controller;
 import com.cogent.bankingsys.entity.Account;
 import com.cogent.bankingsys.entity.Customer;
 import com.cogent.bankingsys.entity.Payload;
+import com.cogent.bankingsys.entity.Transaction;
 import com.cogent.bankingsys.service.AccService;
 import com.cogent.bankingsys.service.CustService;
 import com.cogent.bankingsys.service.PayloadService;
+import com.cogent.bankingsys.service.TransactionService;
 import com.cogent.bankingsys.service.serviceImpl.CustServiceImpl;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,9 @@ public class CustomerController {
 
     @Autowired
     private PayloadService payloadService;
+
+    @Autowired
+    private TransactionService transactionService;
 
     /**
      * customer register; create customer
@@ -159,11 +164,31 @@ public class CustomerController {
      */
     @PutMapping (value = "/api/customer/transfer")
     public ResponseEntity<Payload> savePayload(@Valid @RequestBody Payload payload){
-//        @Valid @PathVariable long fromAccNo, @Valid @PathVariable long toAccNo,
-//        payload.setFromAccNumber(fromAccNo);
-//        payload.setToAccNumber(toAccNo);
-//        payload.setFromAccNumber(fromAccNo);
-        System.out.println(payload.toString());
+
+        // update fromAccNo transaction info
+        long fromAccNumber = payload.getFromAccNumber();
+        Account fromAccount = accService.findByAccountNumber(fromAccNumber);
+        Transaction fromTransaction = new Transaction();
+        fromTransaction.setAccount(fromAccount);
+        fromTransaction.setAmount(-payload.getAmount());
+        fromTransaction.setDate(new Date());
+        fromTransaction.setReference(payload.getReason());
+
+        transactionService.saveTransaction(fromTransaction);
+        System.out.println("from transaction: " + fromTransaction.toString());
+
+        // update toAccNo transaction info
+        long toAccountNumber = payload.getToAccNumber();
+        Account toAccount = accService.findByAccountNumber(toAccountNumber);
+        Transaction toTransaction = new Transaction();
+        toTransaction.setAccount(toAccount);
+        toTransaction.setAmount(payload.getAmount());
+        toTransaction.setDate(new Date());
+        toTransaction.setReference(payload.getReason());
+
+        transactionService.saveTransaction(toTransaction);
+        System.out.println("to transaction: " + toTransaction.toString());
+
         Payload payloadResp = payloadService.savePayload(payload);
         System.out.println(payloadResp.toString());
         return new ResponseEntity<>(payloadResp, HttpStatus.OK);

@@ -17,16 +17,16 @@ public class PayloadServiceImpl implements PayloadService {
 
     @Override
     public Payload savePayload(Payload payload) {
-        return null;
+        return payloadRepo.save(payload);
     }
 
     @Override
     public Optional<Payload> findByPayloadId(long payloadId) {
-        return Optional.empty();
+        return payloadRepo.findById(payloadId);
     }
 
     @Override
     public List<Payload> findAll() {
-        return null;
+        return payloadRepo.findAll();
     }
 }
