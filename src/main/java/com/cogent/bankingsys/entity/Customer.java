@@ -1,5 +1,6 @@
 package com.cogent.bankingsys.entity;
 
+import com.cogent.bankingsys.entity.enumClass.CustomerStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -35,6 +36,9 @@ public class Customer {
     @Column(name = "secretAnswer")
     private String secretAnswer;
 
+    @Column(name = "status")
+    private boolean status;
+
     public Customer(Long customerId, String username, String fullname, String password, String phone, String identityID, String secretQuestion, String secretAnswer) {
         this.customerId = customerId;
         this.username = username;
@@ -51,7 +55,7 @@ public class Customer {
     }
 
     @Override
-    public String toString() {
+        public String toString() {
         return "Customer{" +
                 "customerId=" + customerId +
                 ", username='" + username + '\'' +
@@ -61,6 +65,7 @@ public class Customer {
                 ", identityID='" + identityID + '\'' +
                 ", secretQuestion='" + secretQuestion + '\'' +
                 ", secretAnswer='" + secretAnswer + '\'' +
+                ", status=" + status +
                 '}';
     }
 }

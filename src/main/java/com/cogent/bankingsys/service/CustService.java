@@ -18,4 +18,5 @@ public interface CustService {
     public Customer saveOrUpdate(Customer customer);
 
     Optional<Customer> findCustomerByUserName(String name,String pwd);
+//    Optional<Customer> updateCustomer(Long customerId, Customer customer);
 }

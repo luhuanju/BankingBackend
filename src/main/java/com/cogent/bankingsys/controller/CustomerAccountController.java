@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Random;
 
 import com.cogent.bankingsys.entity.Account;
+import com.cogent.bankingsys.entity.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -66,6 +67,11 @@ public class CustomerAccountController {
 		return new ResponseEntity<>(accountList, HttpStatus.OK);
 	}
 
+//	@GetMapping(value = "/api/staff/customer")
+//	public ResponseEntity<List<Account>> fetAllCustomers(){
+//		List<Account> accountList = accountService.findAll();
+//		return new ResponseEntity<>(accountList, HttpStatus.OK);
+//	}
 	/**
 	 * 
 	 * @param customerID

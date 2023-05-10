@@ -1,5 +1,5 @@
 package com.cogent.bankingsys.entity.enumClass;
 
-public enum AccountStatus {
+public enum CustomerStatus {
     Enable, Disable
 }

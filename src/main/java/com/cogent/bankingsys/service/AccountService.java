@@ -23,4 +23,8 @@ public class AccountService {
 	public List<Account> getAllAccoubnt(long costomerId) {
 		return accountRepo.findByCustomerId(costomerId);
 	}
+
+	public List<Account> findAll() {
+		return accountRepo.findAll();
+	}
 }

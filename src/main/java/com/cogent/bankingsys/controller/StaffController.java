@@ -1,5 +1,6 @@
 package com.cogent.bankingsys.controller;
 
+import com.cogent.bankingsys.entity.Customer;
 import com.cogent.bankingsys.entity.Staff;
 import com.cogent.bankingsys.errhandle.AlreadyExistException;
 import com.cogent.bankingsys.errhandle.ResourceNotFoundException;
@@ -31,6 +32,22 @@ public class StaffController {
 	StaffRepository staffRepository;
 
 
+	/**
+	 *
+	 * @param staff Login
+	 * @return
+	 */
+	@PostMapping("/stafflogin")
+	public ResponseEntity<Staff> getStaff(@Valid @RequestBody Staff staff) {
+		Optional<Staff> existingStaff = staffRepository.findBystaffUserName(staff.getStaffUserName());
+		if (existingStaff.isPresent()&& existingStaff.get().getStaffPassword().equals(staff.getStaffPassword())) {
+			return new ResponseEntity<>(existingStaff.get(),HttpStatus.OK);
+		}else{
+			return new ResponseEntity<>(HttpStatus.OK);
+		}
+	}
+
+
 	@PostMapping()          //So @Valid - need to Activate Validation
 	public Staff addStaff(@Valid @RequestBody Staff newStaff) {
 		System.out.println("Adding record to database");
@@ -46,7 +63,7 @@ public class StaffController {
 
 
 	}
-	
+
 
 
 

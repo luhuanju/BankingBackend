@@ -37,8 +37,8 @@ public class Account {
     private Date dateOfCreation;
 
     @Column(name = "accountStatus")
-    @Enumerated(EnumType.STRING)
-    private AccountStatus accountStatus;
+//    @Enumerated(EnumType.STRING)
+    private boolean accountStatus;
 
     @Column(name = "customerId")
     private long customerId;
@@ -47,7 +47,7 @@ public class Account {
     @JsonIgnoreProperties("account")
     private List<Transaction> transaction;
 
-    public Account(Long accountId, Long accountNumber, AccountType accountType, Long accountBalance, String approved, Date dateOfCreation, AccountStatus accountStatus, long customerId, List<Transaction> transaction) {
+    public Account(Long accountId, Long accountNumber, AccountType accountType, Long accountBalance, String approved, Date dateOfCreation, boolean accountStatus, long customerId, List<Transaction> transaction) {
         this.accountId = accountId;
         this.accountNumber = accountNumber;
         this.accountType = accountType;

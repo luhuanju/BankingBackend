@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
@@ -55,6 +56,30 @@ public class CustomerController {
         System.out.print(customer);
         return new ResponseEntity<>(customer.get(),HttpStatus.OK);
     }
+
+    @GetMapping(value = "/api/staff/customer")
+    public ResponseEntity<List<Customer>> fetAllCustomers(){
+        List<Customer> accountList = custService.findAll();
+        return new ResponseEntity<>(accountList, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/api/staff/accounts/approve")
+    public ResponseEntity<List<Account>> getAllcouts(){
+        List<Account> accountList = accService.findAll();
+        return new ResponseEntity<>(accountList, HttpStatus.OK);
+    }
+
+    @PutMapping(value = "/api/staff/accounts/approve")
+    public ResponseEntity<Account> updateAccount(@RequestBody Account account){
+        accService.updateAccount(account.getAccountId(),account);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+    @PutMapping(value = "/api/staff/customer")
+    public ResponseEntity<Customer> blockCustomer(@RequestBody Customer customer){
+        custService.updateCustomer(customer.getCustomerId(),customer);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 
     /**
      * create account for a customer
