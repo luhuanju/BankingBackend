@@ -191,34 +191,36 @@ public class CustomerController {
     @PutMapping (value = "/api/customer/transfer")
     public ResponseEntity<Payload> savePayload(@Valid @RequestBody Payload payload){
 
-        // update fromAccNo transaction info
+
+        long moneyChange = payload.getAmount();
+        String reason = payload.getReason();
+
+        // update fromAccNo transaction info & balance & save
         long fromAccNumber = payload.getFromAccNumber();
-        Account fromAccount = accService.findByAccountNumber(fromAccNumber);
-        Transaction fromTransaction = new Transaction();
-        fromTransaction.setAccount(fromAccount);
-        fromTransaction.setAmount(-payload.getAmount());
-        fromTransaction.setDate(new Date());
-        fromTransaction.setReference(payload.getReason());
+        accBalanceHelper(fromAccNumber, -moneyChange, reason);
 
-        transactionService.saveTransaction(fromTransaction);
-        System.out.println("from transaction: " + fromTransaction.toString());
-
-        // update toAccNo transaction info
+        // update toAccNo transaction info & balance & save
         long toAccountNumber = payload.getToAccNumber();
-        Account toAccount = accService.findByAccountNumber(toAccountNumber);
-        Transaction toTransaction = new Transaction();
-        toTransaction.setAccount(toAccount);
-        toTransaction.setAmount(payload.getAmount());
-        toTransaction.setDate(new Date());
-        toTransaction.setReference(payload.getReason());
-
-        transactionService.saveTransaction(toTransaction);
-        System.out.println("to transaction: " + toTransaction.toString());
+        accBalanceHelper(toAccountNumber, moneyChange, reason);
 
         Payload payloadResp = payloadService.savePayload(payload);
         System.out.println(payloadResp.toString());
         return new ResponseEntity<>(payloadResp, HttpStatus.OK);
     }
 
+    public void accBalanceHelper(long accountNo, long moneyChange, String reason){
+        // update balance of the account
+        Account updateAccount = accService.findByAccountNumber(accountNo);
 
+        long oldBalance = updateAccount.getAccountBalance();
+        updateAccount.setAccountBalance(oldBalance + moneyChange);
+        accService.saveAccount(updateAccount);
+
+        Transaction fromTransaction = new Transaction();
+        fromTransaction.setAccount(updateAccount);
+        fromTransaction.setAmount(moneyChange);
+        fromTransaction.setDate(new Date());
+        fromTransaction.setReference(reason);
+        transactionService.saveTransaction(fromTransaction);
+    }
 }
